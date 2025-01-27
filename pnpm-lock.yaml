@@ -23,12 +23,21 @@ importers:
       ant-design-vue:
         specifier: ^4.2.6
         version: 4.2.6(vue@3.5.13)
+      highlight.js:
+        specifier: ^11.11.1
+        version: 11.11.1
       jsoneditor:
         specifier: ^10.1.2
         version: 10.1.2
+      prismjs:
+        specifier: ^1.29.0
+        version: 1.29.0
       vue:
         specifier: ^3.5.13
         version: 3.5.13
+      vue-highlightjs:
+        specifier: ^1.3.3
+        version: 1.3.3
       vue-router:
         specifier: ^4.5.0
         version: 4.5.0(vue@3.5.13)
@@ -789,6 +798,10 @@ packages:
   graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
 
+  highlight.js@11.11.1:
+    resolution: {integrity: sha512-Xwwo44whKBVCYoliBQwaPvtd/2tYFkRQtXDWj1nackaV2JPXx3L0+Jvd8/qCJ2p+ML0/XVkJ2q+Mr+UVdpJK5w==}
+    engines: {node: '>=12.0.0'}
+
   hookable@5.5.3:
     resolution: {integrity: sha512-Yc+BQe8SvoXH1643Qez1zqLRmbA5rCL+sSmk6TVos0LWVfNIB7PGncdlId77WzLGSIB5KaWgTaNTs2lNVEI6VQ==}
 
@@ -961,6 +974,10 @@ packages:
   pretty-ms@9.2.0:
     resolution: {integrity: sha512-4yf0QO/sllf/1zbZWYnvWw3NxCQwLXKzIj0G849LSufP15BXKM0rbD2Z3wVnkMfjdn/CB0Dpp444gYAACdsplg==}
     engines: {node: '>=18'}
+
+  prismjs@1.29.0:
+    resolution: {integrity: sha512-Kx/1w86q/epKcmte75LNrEoT+lX8pBpavuAbvJWRXar7Hz8jrtF+e3vY751p0R8H9HdArwaCTNDDzHg/ScJK1Q==}
+    engines: {node: '>=6'}
 
   punycode@2.3.1:
     resolution: {integrity: sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==}
@@ -1140,6 +1157,9 @@ packages:
     peerDependenciesMeta:
       '@vue/composition-api':
         optional: true
+
+  vue-highlightjs@1.3.3:
+    resolution: {integrity: sha512-NaBfeVVa5rbKw9bNU0ajAcDmKOdzT+XuBZwYKFbEGSGFKGOc5wYerMY3R4WQrnlLD7BkG9tIIusqemKnIgQ7MA==}
 
   vue-router@4.5.0:
     resolution: {integrity: sha512-HDuk+PuH5monfNuY+ct49mNmkCRK4xJAV9Ts4z9UFc4rzdDnxQLyCMGGc8pKhZhHTVzfanpNwB/lwqevcBwI4w==}
@@ -1946,6 +1966,8 @@ snapshots:
 
   graceful-fs@4.2.11: {}
 
+  highlight.js@11.11.1: {}
+
   hookable@5.5.3: {}
 
   html-tags@3.3.1: {}
@@ -2076,6 +2098,8 @@ snapshots:
   pretty-ms@9.2.0:
     dependencies:
       parse-ms: 4.0.0
+
+  prismjs@1.29.0: {}
 
   punycode@2.3.1: {}
 
@@ -2234,6 +2258,10 @@ snapshots:
   vue-demi@0.14.10(vue@3.5.13):
     dependencies:
       vue: 3.5.13
+
+  vue-highlightjs@1.3.3:
+    dependencies:
+      highlight.js: 11.11.1
 
   vue-router@4.5.0(vue@3.5.13):
     dependencies:
