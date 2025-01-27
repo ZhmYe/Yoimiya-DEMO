@@ -1,5 +1,6 @@
 <template>
-  <a-card title="Input Set" bordered>
+  <!-- <a-card title="Matrix Multiplication ZKP" bordered> -->
+    <a-card title="Input Setup" bordered>
     <!-- 表单部分 -->
     <a-form>
       <a-row :gutter="24">
@@ -7,8 +8,8 @@
         <a-col span="8">
           <a-form-item label="Matrix A Size">
             <a-input-group compact>
-              <a-input style="width: 50%" placeholder="Rows (A)" v-model:number="matrixA.rows" />
-              <a-input style="width: 50%" placeholder="Cols (A)" v-model:number="matrixA.cols" />
+              <a-input style="width: 50%" placeholder="Rows (A)" number="300" />
+              <a-input style="width: 50%" placeholder="Cols (A)" number="300" />
             </a-input-group>
           </a-form-item>
         </a-col>
@@ -16,15 +17,15 @@
         <a-col span="8">
           <a-form-item label="Matrix B Size">
             <a-input-group compact>
-              <a-input style="width: 50%" placeholder="Rows (B)" v-model:number="matrixB.rows" />
-              <a-input style="width: 50%" placeholder="Cols (B)" v-model:number="matrixB.cols" />
+              <a-input style="width: 50%" placeholder="Rows (B)" number="300" />
+              <a-input style="width: 50%" placeholder="Cols (B)" number="300" />
             </a-input-group>
           </a-form-item>
         </a-col>
         <!-- 分区数量 -->
         <a-col span="8">
           <a-form-item label="Partition Number">
-            <a-input placeholder="Enter number of partitions" v-model:number="partitionNumber" />
+            <a-input placeholder="Enter number of partitions" number="3" />
           </a-form-item>
         </a-col>
       </a-row>
@@ -35,126 +36,19 @@
       </a-row>
     </a-form>
   </a-card>
-
-  <!-- 第一部分：电路信息展示 -->
-  <a-card>
+    <!-- 上方区域：JSON 展示 -->  
     <a-row gutter="24">
-      <!-- 左侧：不划分电路的信息 -->
-      <a-col :span="12" class="LeftCard">
-        <a-card title="Original Circuit Information">
-          <a-list bordered size="large">
-              <!-- 第一个列表项 -->
-              <a-list-item>
-                <a-row gutter={16} style="width: 100%">
-                  <a-col :span="8">
-                    <strong>Constraints Number:</strong> 
-                    <a-tag color="purple">54000000</a-tag>
-                  </a-col>
-                  <a-col :span="8">
-                    <strong>Total Memory Cost:</strong> 
-                    <a-tag color="pink">49.9247GB</a-tag>
-                  </a-col>
-                  <a-col :span="8">
-                    <strong>Prove Memory Cost:</strong> 
-                    <a-tag color="pink">14.8866GB</a-tag>
-                  </a-col>
-                </a-row>
-              </a-list-item>
-
-
-              <a-list-item>
-                <a-row gutter={16} style="width: 100%">
-                 <a-col :span="8">
-                    <strong>Proof Generation Time:</strong> 
-                    <a-tag color="orange">28.0164s</a-tag>
-                  </a-col>
-                  <a-col :span="8">
-                    <strong>Public Input Size:</strong> 
-                    <a-tag color="blue">270000</a-tag>
-                  </a-col>
-
-                </a-row>
-              </a-list-item>
-              <a-list-item style="justify-content: center;">
-                <a-button type="primary">View Proof Details</a-button>               <!-- 这里最好可以用echarts来一个树状图，验证merkler root -->
-              </a-list-item>
-            </a-list>
-        </a-card>
-        <a-card title="Sub Circuits Information">
-          <a-tabs>
-            <a-tab-pane v-for="(info, index) in partitionInfo" :key="index" :tab="`Partition ${index + 1}`">
-              <a-list bordered size="large">
-              <!-- 第一个列表项 -->
-              <a-list-item>
-                <a-row gutter={16} style="width: 100%">
-                  <a-col :span="8">
-                    <strong>Constraints Number:</strong> 
-                    <a-tag color="purple">18132348</a-tag>
-                  </a-col>
-                  <a-col :span="8">
-                    <strong>Total Memory Cost:</strong> 
-                    <a-tag color="pink">25.9381GB</a-tag>
-                  </a-col>
-                  <a-col :span="8">
-                    <strong>Prove Memory Cost:</strong> 
-                    <a-tag color="pink">6.5218GB</a-tag>
-                  </a-col>
-                </a-row>
-              </a-list-item>
-
-
-              <a-list-item>
-                <a-row gutter={16} style="width: 100%">
-                 <a-col :span="8">
-                    <strong>Proof Generation Time:</strong> 
-                    <a-tag color="orange">10.8098s</a-tag>
-                  </a-col>
-                  <a-col :span="8">
-                    <strong>Public Input Size:</strong> 
-                    <a-tag color="blue">132348</a-tag>
-                  </a-col>
-                </a-row>
-              </a-list-item>
-              <a-list-item style="justify-content: center;">
-                <a-button type="primary">View Proof Details</a-button>       
-              </a-list-item>
-            </a-list>
-            </a-tab-pane>
-          </a-tabs>
-        <a-card title="Overview" style="margin-top: 10px;">
-          <!-- <a-list bordered size="large" > -->
-
-              <!-- <a-list-item> -->
-                <!-- <a-card title="Detailed Metrics" bordered> -->
-                <a-row gutter={24} style="width: 80%; margin: 0 auto;">
-                  <a-col :span="8">
-                    <a-progress type="circle" :percent="Math.round((26.3117 / 49.9247) * 100 * 100) / 100" :size="100" />
-                    <a-statistic title="Max Total Memory" value="26.3117GB"/>
-                  </a-col>
-                  <a-col :span="8">
-                    <a-progress type="circle" :percent="Math.round((6.6346 / 14.8866) * 100 * 100) / 100" :size="100" />
-                    <a-statistic title="Max Prove Memory" value="6.6346GB'" />
-                  </a-col>
-                  <a-col :span="8">
-                    <a-progress type="circle" :percent="Math.round((18253283 / 54000000) * 100 * 100) / 100" :size="100" />
-                    <a-statistic title="Max Constraint Number" value="18253283" />
-                  </a-col>
-                </a-row>
-              <!-- </a-card> -->
-              <!-- </a-list-item> -->
-            <!-- </a-list> -->
-          </a-card>
+      <!-- JSON 区域：左侧展示矩阵 C 和 proof -->
+      <a-col :span="12">
+        <a-card title="ZK-SNARK Proof">
+          <div id="json-editor" style="height: 500px;"></div>
         </a-card>
       </a-col>
 
-      <!-- 右侧：划分后的电路信息 -->
-      <a-col :span="12" class="RightCard">
-         <!-- 第一部分：Execution DAG 展示 -->
-  <a-card>
-    <a-row>
-      <a-col :span="24">
-        <a-card title="Execution DAG" :bordered="true">
-          <div style="width: 100%; height: 280px;">
+      <!-- Execution DAG 区域：右侧展示 Execution DAG -->
+      <a-col :span="12">
+        <a-card title="Partitioning Result">
+          <div style="width: 100%; height: 500px;">
             <VueFlow :nodes="nodes" :edges="edges" fit-view-on-init>
               <Controls />
               <Background />
@@ -163,73 +57,109 @@
         </a-card>
       </a-col>
     </a-row>
-  </a-card>
 
-  <!-- 第二部分：图表展示 -->
-  <a-card title="Analysis Charts" bordered>
-    <a-row gutter="24">
-      <!-- 柱状图：内存使用 -->
-      <a-col :span="12">
-        <div id="memoryBarChart" style="width: 100%; height: 360px;"></div>
-      </a-col>
-      <!-- 堆叠柱状图：时间 -->
-      <a-col :span="12">
-        <div id="timeStackedBarChart" style="width: 100%; height: 360px;"></div>
+    <!-- 下方区域：表格和图表 -->
+    <a-row gutter="24" style="margin-top: 20px;">
+      <!-- 表格和图表区域合并为 System Performance -->
+      <a-col :span="24">
+        <a-card title="System Performance">
+          <a-row gutter="24">
+            <!-- 表格展示区域 -->
+            <a-col :span="12">
+              <a-table :columns="columns" :dataSource="tableData" bordered :pagination="false">
+                <template #bodyCell="{ column, record }">
+                  <template v-if="column.key === 'circuit'">
+                    <a> {{ record.circuit }} </a>
+                  </template>
+                </template>
+              </a-table>
+            </a-col>
+
+            <!-- 图表展示区域：内存柱状图和时间堆叠柱状图 -->
+            <a-col :span="12">
+              <a-row gutter="24">
+                <!-- 柱状图：内存使用 -->
+                <a-col :span="12">
+                  <div id="memoryBarChart" style="width: 100%; height: 360px;"></div>
+                </a-col>
+                <!-- 堆叠柱状图：时间 -->
+                <a-col :span="12">
+                  <div id="timeStackedBarChart" style="width: 100%; height: 360px;"></div>
+                </a-col>
+              </a-row>
+            </a-col>
+          </a-row>
+        </a-card>
       </a-col>
     </a-row>
-  </a-card>
-
-      </a-col>
-    </a-row>
-  </a-card>
+  <!-- </a-card> -->
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, onMounted } from "vue";
-import ZKNode from '@/components/ZKNode.vue';
-import * as echarts from 'echarts';
+import { ref, onMounted } from "vue";
+import JSONEditor from 'jsoneditor';
+import 'jsoneditor/dist/jsoneditor.css';
 import { MarkerType, VueFlow } from '@vue-flow/core';
-// 引入 Vue Flow 的 CSS 文件
 import '@vue-flow/core/dist/style.css';
 import '@vue-flow/core/dist/theme-default.css';
 import '@vue-flow/controls/dist/style.css';
 import { Controls } from '@vue-flow/controls';
 import { Background } from '@vue-flow/background';
-// 表单数据
-const matrixA = reactive({ rows: 0, cols: 0 });
-const matrixB = reactive({ rows: 0, cols: 0 });
-const partitionNumber = ref(0);
+import * as echarts from 'echarts';
 
-// 电路信息
-const nonPartitionInfo = ref({
-  constraints: 1000,
-  memory: '200MB',
-  time: '15s',
+// 硬编码的 300x300 矩阵
+const hardcodedMatrixC = Array(300).fill(0).map(() => Array(300).fill(Math.random() * 100));
+
+// 零知识证明数据
+const proof = ref({
+  proof: {
+    shared_inputs: Array(121121).fill(0),
+    shared_outputs: Array(120003).fill(0),
+    a: [
+      "0x1a20e8392f0fbb5718a299c3a555d9a5e3b57d54b3816b66b9539cc4ee090eaf",
+      "0x3ba7f27622d93a7c27a2bc4e8f49ac94e5f74095f7b8b0788f13e97b4132ad7f"
+    ],
+    b: [
+      [
+        "0x1b4f1f03814a3743ec897f1f00a558330e76e4e5f7228db0e7a1d52cb04023fc",
+        "0x0e15b7d6d2274c2a1ff5a65f07b0baf970e1b40189b0c6b600de9f7c5a899054"
+      ],
+      [
+        "0x0f9d1c477be4338a6cfbe01478b0221b4c800c4ed779e839989e56e5759a6c2f",
+        "0x0b6d1f8c8bcd82d3e2a1b4ca3d1f0645d319ee8a7e9f59d7ea1e903d2fbdab72"
+      ]
+    ],
+    c: [
+      "0x17e0143488269e9863f1d9d6d88362cd97a482fcb387953b8c27a44035e990d4",
+      "0x0c2e9be14b3033f47a17963d9d45e4b8e02f7bbec7988d2be9a874545758f2ad"
+    ]
+  }
 });
-const partitionInfo = ref([
-  { constraints: 300, memory: '80MB', time: '10s' },
-  { constraints: 300, memory: '80MB', time: '10s' },
-  { constraints: 400, memory: '90MB', time: '10s' },
-]);
 
-// 查看证明详情
-const viewProofDetails = (type: string) => {
-  alert(`Displaying proof details for ${type}`);
-};
+const matrixC = ref(hardcodedMatrixC); // 使用硬编码的矩阵 C
 
-// 生成电路的函数
-// const generateCircuits = () => {
-//   if (matrixA.cols !== matrixB.rows || partitionNumber.value <= 0) {
-//     alert('Invalid input! Ensure Matrix A columns equal Matrix B rows and partition number > 0.');
-//     return;
-//   }
-// };
+// 表格数据（内存、时间），行列互换并增加汇总
+const columns = [
+  { title: 'Circuit', dataIndex: 'circuit', key: 'circuit' },
+  { title: 'Constraints Number', dataIndex: 'constraints', key: 'constraints' },
+  { title: 'Total Memory Cost', dataIndex: 'memory', key: 'memory' },
+  { title: 'Proof Memory Cost', dataIndex: 'proofMemory', key: 'proofMemory' },
+  { title: 'Proof Generation Time', dataIndex: 'proofTime', key: 'proofTime' }
+];
+
+const tableData = [
+  { circuit: 'Original Circuit', constraints: '54000000', memory: '49.9247GB', proofMemory: '14.8866GB', proofTime: '28.0164s' },
+  { circuit: 'Sub Circuit 1', constraints: '18132348', memory: '26.3117GB', proofMemory: '6.6346GB', proofTime: '10.8098s' },
+  { circuit: 'Sub Circuit 2', constraints: '18132348', memory: '25.1237GB', proofMemory: '6.6335GB', proofTime: '10.4256s' },
+  { circuit: 'Sub Circuit 3', constraints: '18253283', memory: '25.9132GB', proofMemory: '6.6346GB', proofTime: '11.8145s' },
+  // { circuit: 'Summary', constraints: '108900000', memory: '127.2732GB', proofMemory: '34.7593GB', proofTime: '61.0663s' }
+];
 
 // 节点和边的初始状态
 const nodes = ref([
   { id: '1', position: { x: 250, y: 50 }, data: { label: 'Partition 1' }, style: { width: 100, height: 50 } },
   { id: '2', position: { x: 100, y: 300 }, data: { label: 'Partition 2' }, style: { width: 100, height: 50 } },
-  { id: '3', position: { x: 400, y: 300 }, data: { label: 'Partition 3' }, style: { width: 100, height: 50 } },
+  { id: '3', position: { x: 400, y: 300 }, data: { label: 'Partition 3' }, style: { width: 100, height: 50 } }
 ]);
 
 const edges = ref([
@@ -237,7 +167,7 @@ const edges = ref([
     id: 'e1-2',
     source: '1',
     target: '2',
-    label: 'Shared Variables Number: 12121',
+    label: 'Shared Variables Number: 121121',
     labelStyle: { fontSize: 12, fill: '#000' },
     style: { strokeWidth: 2 },
   },
@@ -259,20 +189,35 @@ const edges = ref([
   },
 ]);
 
-const generateCircuits = () => {
-  if (matrixA.cols !== matrixB.rows || partitionNumber.value <= 0) {
-    alert('Invalid input! Ensure Matrix A columns equal Matrix B rows and partition number > 0.');
-    return;
-  }
-};
 
 // 图表初始化
 onMounted(() => {
-  const memoryChart = echarts.init(document.getElementById('memoryBarChart'));
+  const jsonData = {
+    proof1: proof.value,
+    proof2: proof.value,
+    proof3: proof.value,
+    matrixC: matrixC.value,
+  };
+  // 初始化 JSONEditor，移除搜索框
+  const container = document.getElementById('json-editor') as HTMLElement;
+  const options = {
+    mode: 'view',
+    onChange: function () { console.log(editor.get()); }
+  };
+  const editor = new JSONEditor(container, options);
+  editor.set(jsonData);
+  const legendOptions = {
+  type: 'scroll', // 启用滚动
+  right: 10, // 靠右显示
+  data: ['Original Circuit', 'Sub Circuit 1', 'Sub Circuit 2', 'Sub Circuit 3'],
+};
+
+const memoryChart = echarts.init(document.getElementById('memoryBarChart'));
 memoryChart.setOption({
   tooltip: {},
   xAxis: { type: 'category', data: ['Prove Memory', 'Total Memory'] },
-  yAxis: { type: 'value', name: 'Memory(GB)' }, // 添加纵坐标
+  yAxis: { type: 'value', name: 'Memory(GB)' },
+  legend: legendOptions, // 共享图例
   series: [
     { name: 'Original Circuit', type: 'bar', data: [49.9247, 14.8866] },
     { name: 'Sub Circuit 1', type: 'bar', data: [26.3117, 6.6312] },
@@ -284,32 +229,20 @@ memoryChart.setOption({
 const timeChart = echarts.init(document.getElementById('timeStackedBarChart'));
 timeChart.setOption({
   tooltip: {},
-  legend: {
-    type: 'scroll', // 启用滚动
-    // orient: 'vertical', // 垂直布局
-    right: 10, // 靠右显示
-    // top: 20, // 向下偏移
-    // bottom: 20, // 向上偏移
-    data: ['Original Circuit Time', 'Sub Circuit 1', 'Sub Circuit 2', 'Sub Circuit 3'], // 图例数据
-  },
+  legend: legendOptions, // 共享图例
   xAxis: { type: 'category', data: ['Original Circuit', 'Sub Circuits'] },
-  yAxis: { type: 'value', name: 'Time (s)' }, // 添加纵坐标
+  yAxis: { type: 'value', name: 'Time (s)' },
   series: [
-    { name: 'Original Circuit Time', type: 'bar', stack: 'total', data: [28.0164, 0] }, // 原始电路时间
-    { name: 'Sub Circuit 1', type: 'bar', stack: 'total', data: [0, 10.809886404] }, // 子电路 1 时间
-    { name: 'Sub Circuit 2', type: 'bar', stack: 'total', data: [0, 10.425607666] }, // 子电路 2 时间
-    { name: 'Sub Circuit 3', type: 'bar', stack: 'total', data: [0, 11.814508779] }, // 子电路 3 时间
+    { name: 'Original Circuit', type: 'bar', stack: 'total', data: [28.0164, 0] },
+    { name: 'Sub Circuit 1', type: 'bar', stack: 'total', data: [0, 10.809886404] },
+    { name: 'Sub Circuit 2', type: 'bar', stack: 'total', data: [0, 10.425607666] },
+    { name: 'Sub Circuit 3', type: 'bar', stack: 'total', data: [0, 11.814508779] },
   ],
 });
 
-
 });
-
-
 </script>
 
 <style scoped>
-.LeftCard, .RightCard {
-  height: 100%;
-}
+/* 可以根据需要进一步调整样式 */
 </style>
